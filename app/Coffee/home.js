@@ -13,7 +13,7 @@ const home = () => {
     <View>
       <Stack.Screen
         options={{
-          headerShown: true,
+          headerShown: false,
           // title: "All",
           //   headerLeft: () => <DrawerToggleButton />,
         }}
