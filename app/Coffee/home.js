@@ -6,7 +6,7 @@ import coffeeImage from '../../assets/coffee.svg'
 const home = () => {
   const router = useRouter();
 
-  const handleDetails = () => {
+  const handleDetail = () => {
     router.push("coffee/detail");
   };
   return (
@@ -20,7 +20,7 @@ const home = () => {
       />
       <View style={styles.container}>
       <Text style={styles.text}>All coffees</Text>
-      <TouchableOpacity onPress={handleDetails}>
+      <TouchableOpacity onPress={handleDetail}>
         <Text style={styles.button}>Choose A coffee</Text>
       </TouchableOpacity>
     </View>

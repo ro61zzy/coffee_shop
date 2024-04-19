@@ -7,7 +7,7 @@ const index = ({ navigation }) => {
     const router = useRouter();
 
     const handleCoffee = () => {
-        router.push("coffee/details")
+        router.push("coffee/detail")
     }
 
   return (
