@@ -22,7 +22,7 @@ export default function RootLayout() {
         }}
     >
       <Stack.Screen name="home" options={{
-        headerTitle:"Coffee"
+        headerTitle:"Coffees"
       }} />
     </Stack>
   );

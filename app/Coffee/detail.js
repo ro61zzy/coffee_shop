@@ -2,7 +2,7 @@ import React from 'react'
 import { View, Text, TouchableOpacity } from 'react-native'
 import { Stack, useRouter } from 'expo-router';
 
-const details = ({ navigation }) => {
+const detail = () => {
     const router = useRouter();
 
     const handleOrder = () => {
@@ -14,7 +14,6 @@ const details = ({ navigation }) => {
        options={{
         headerShown: true,
         title: "That Coffee",
-        //   headerLeft: () => <DrawerToggleButton />,
       }}
       />
       <Text>Coffee Details</Text>
@@ -25,4 +24,4 @@ const details = ({ navigation }) => {
   )
 }
 
-export default details
+export default detail
