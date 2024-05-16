@@ -4,8 +4,10 @@ import {
   Text,
   TouchableOpacity,
   StyleSheet,
+  SafeAreaView,
+  ScrollView,
   ImageBackground,
-  Image,
+  Button,
 } from "react-native";
 import { Stack, useRouter } from "expo-router";
 import { Picker } from "@react-native-picker/picker";
@@ -36,7 +38,7 @@ const home = () => {
     router.push("coffee/detail");
   };
   return (
-    <View>
+    <SafeAreaView style={styles.container}>
       <Stack.Screen
         options={{
           headerShown: false,
@@ -44,23 +46,83 @@ const home = () => {
           //   headerLeft: () => <DrawerToggleButton />,
         }}
       />
-      <View
+
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
+        <View style={styles.blackBackground}>
+          {/* Content within the black background */}
+        </View>
+        <View style={styles.whiteBackground}>
+         <ScrollView>
+          
+         </ScrollView>
+        </View>
+        <View style={styles.cardContainer}>
+          <ImageBackground
+            source={require("../../assets/promo_card.png")} 
+            style={styles.cardBackground}
+            imageStyle={{ borderRadius: 10 }} 
+          >
+            <View style={styles.cardContent}>
+              <TouchableOpacity
+                style={{
+                  backgroundColor: "#ED5151",
+                  padding: 4,
+                  borderRadius: 8,
+                  width: 55,
+                }}
+              >
+                <Text
+                  style={{
+                    color: "#fff",
+                    fontWeight: "700",
+                  }}
+                >
+                  Promo
+                </Text>
+              </TouchableOpacity>
+              <View style={{  marginTop:8,backgroundColor: "black", width:"58%" }}>
+                <Text
+                  style={{
+                    fontSize: 30,
+                    fontWeight: "700",
+                    color: "#fff",
+                  }}
+                >
+                  Buy one get
+                </Text>
+              </View>
+              <View style={{ marginTop:5,
+              backgroundColor: "black", width:"40%" }}>
+                <Text
+                  style={{
+                    fontSize: 26,
+                    fontWeight: "700",
+                    color: "#fff",
+                  }}
+                >
+                  one FREE
+                </Text>
+              </View>
+            </View>
+          </ImageBackground>
+        </View>
+        {/* </View> */}
+      </ScrollView>
+      {/*  <View
         style={{
           flexDirection: "row",
-          justifyContent: "space-between",
-          width:"86%",
+          // width:"86%",
+          gap: "50%",
           alignItems: "center",
           justifyContent: "center",
         }}
       >
         <View
-          style={
-            {
-                flexDirection: "column",
-                width: "50%",
-              // backgroundColor:"red"
-            }
-          }
+          style={{
+            flexDirection: "column",
+            width: "50%",
+            // backgroundColor:"red"
+          }}
         >
           <Text>Location</Text>
           <Picker
@@ -81,7 +143,7 @@ const home = () => {
             <Text style={styles.selectedCountry}>
               Selected country: {selectedCountry}
             </Text>
-          )}*/}
+          )}
         </View>
         <View>
           <Image
@@ -94,12 +156,12 @@ const home = () => {
           />
         </View>
       </View>
-      {/* <View style={{}}>
+      <View style={{}}>
         <TouchableOpacity onPress={handleDetail}>
           <Text style={styles.button}>Choose A coffee</Text>
         </TouchableOpacity>
       </View> */}
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -108,9 +170,36 @@ export default home;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  scrollContainer: {
+    flexGrow: 1,
+  },
+  blackBackground: {
+    backgroundColor: "black",
+    height: "30%", // Adjust as needed
+  },
+  whiteBackground: {
+    backgroundColor: "white",
+    flex: 1,
+    padding: 20, // Adjust padding as needed
+  },
+  cardContainer: {
+    position: "absolute",
+    top: "22%", // Position at the bottom of the black background
+    left: "40%", // Set the left position to center horizontally
+    width: "100%", // Set the width to 60% of the screen
     alignItems: "center",
-    justifyContent: "center",
-    paddingHorizontal: 20,
+    marginLeft: "-30%", // Adjust marginLeft to center the card
+  },
+
+  cardBackground: {
+    width: "100%", // Make the image background cover the entire card container
+    //aspectRatio: 1, // Maintain aspect ratio of the image
+    borderRadius: 10, // Apply border radius to the card container
+  },
+  cardContent: {
+    flex: 1,
+    padding: 10,
   },
   title: {
     fontSize: 24,
@@ -118,16 +207,14 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   picker: {
-    width: "100%",
+    width: "50%",
     height: 50,
     marginBottom: 20,
     backgroundColor: "#fafafa",
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: "#ccc",
   },
   selectedCountry: {
     fontSize: 18,
     marginTop: 20,
   },
 });
+
