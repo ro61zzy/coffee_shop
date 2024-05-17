@@ -8,11 +8,13 @@ import {
   ScrollView,
   ImageBackground,
   Button,
+  Image,
 } from "react-native";
 import { Stack, useRouter } from "expo-router";
 import { Picker } from "@react-native-picker/picker";
 import coffeeImage from "../../assets/coffee.svg";
 import User from "../../assets/user.jpg";
+import { Entypo } from "@expo/vector-icons";
 
 const home = () => {
   const router = useRouter();
@@ -37,6 +39,76 @@ const home = () => {
   const handleDetail = () => {
     router.push("coffee/detail");
   };
+
+  const categories = [
+    "Cappuccino",
+    "Machiato",
+    "Latte",
+    "Americano",
+    "Coffee",
+    "Tea",
+  ];
+
+  const coffeeData = [
+    {
+      name: "Cappuccino",
+      image: require("../../assets/cappucino.png"),
+      description: "with Chocolate",
+      price: "$3.99",
+      rating: 4.6,
+    },
+    {
+      name: "Machiato",
+      image: require("../../assets/oat_cappucino.png"),
+      description: "with Oat Milk",
+      price: "$4.50",
+      rating: 4.8,
+    },
+    {
+      name: "Latte",
+      image: require("../../assets/oat_cappucino.png"),
+      description: "with Oat Milk",
+      price: "$4.25",
+      rating: 4.4,
+    },
+    {
+      name: "Coffee",
+      image: require("../../assets/cappucino.png"),
+      description: "with Chocolate",
+      price: "$2.99",
+      rating: 4.2,
+    },
+    {
+      name: "Tea",
+      image: require("../../assets/cappucino.png"),
+      description: "with Chocolate",
+      price: "$2.50",
+      rating: 4.5,
+    },
+  ];
+
+
+  const CoffeeCard = ({ name, image, price, description, rating }) => (
+    <View style={styles.card}>
+      <Image source={image} style={styles.image} />
+      <View style={styles.ratingContainer}>
+        <Entypo name="star" size={14} color="#FBBE21" />
+        <Text style={styles.ratingText}>{rating}</Text>
+      </View>
+      <View style={{ padding: 10 }}>
+        <Text style={styles.name}>{name}</Text>
+        <Text style={{ color: "#9B9B9B", fontSize: 12 }}>{description}</Text>
+        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+          <Text style={{ color: "#000", fontWeight: "600", marginTop: 5, fontSize: 16 }}>{price}</Text>
+          <TouchableOpacity style={{ backgroundColor: "#C67C4E", padding: 8, borderRadius: 6 }}>
+            <Text style={{ fontWeight: "700", fontSize: 15, color: "#fff" }}>+</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </View>
+  );
+
+
   return (
     <SafeAreaView style={styles.container}>
       <Stack.Screen
@@ -52,15 +124,24 @@ const home = () => {
           {/* Content within the black background */}
         </View>
         <View style={styles.whiteBackground}>
-         <ScrollView>
-          
-         </ScrollView>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            {categories.map((category, index) => (
+              <TouchableOpacity key={index} style={styles.button}>
+                <Text style={styles.buttonText}>{category}</Text>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
+          <ScrollView contentContainerStyle={styles.container3}>
+            {coffeeData.map((coffee, index) => (
+              <CoffeeCard key={index} {...coffee} />
+            ))}
+          </ScrollView>
         </View>
         <View style={styles.cardContainer}>
           <ImageBackground
-            source={require("../../assets/promo_card.png")} 
+            source={require("../../assets/promo_card.png")}
             style={styles.cardBackground}
-            imageStyle={{ borderRadius: 10 }} 
+            imageStyle={{ borderRadius: 10 }}
           >
             <View style={styles.cardContent}>
               <TouchableOpacity
@@ -80,7 +161,9 @@ const home = () => {
                   Promo
                 </Text>
               </TouchableOpacity>
-              <View style={{  marginTop:8,backgroundColor: "black", width:"58%" }}>
+              <View
+                style={{ marginTop: 8, backgroundColor: "black", width: "58%" }}
+              >
                 <Text
                   style={{
                     fontSize: 30,
@@ -91,8 +174,9 @@ const home = () => {
                   Buy one get
                 </Text>
               </View>
-              <View style={{ marginTop:5,
-              backgroundColor: "black", width:"40%" }}>
+              <View
+                style={{ marginTop: 5, backgroundColor: "black", width: "40%" }}
+              >
                 <Text
                   style={{
                     fontSize: 26,
@@ -106,61 +190,7 @@ const home = () => {
             </View>
           </ImageBackground>
         </View>
-        {/* </View> */}
       </ScrollView>
-      {/*  <View
-        style={{
-          flexDirection: "row",
-          // width:"86%",
-          gap: "50%",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <View
-          style={{
-            flexDirection: "column",
-            width: "50%",
-            // backgroundColor:"red"
-          }}
-        >
-          <Text>Location</Text>
-          <Picker
-            selectedValue={selectedCountry}
-            onValueChange={(itemValue) => handleCountrySelect(itemValue)}
-            style={styles.picker}
-          >
-            <Picker.Item label="countries" value={null} />
-            {countries.map((country) => (
-              <Picker.Item
-                key={country.cca3}
-                label={country.name.common}
-                value={country.name.common}
-              />
-            ))}
-          </Picker>
-          {/* {selectedCountry && (
-            <Text style={styles.selectedCountry}>
-              Selected country: {selectedCountry}
-            </Text>
-          )}
-        </View>
-        <View>
-          <Image
-            source={User}
-            style={{
-              height: 40,
-              width: 40,
-              borderRadius: 3,
-            }}
-          />
-        </View>
-      </View>
-      <View style={{}}>
-        <TouchableOpacity onPress={handleDetail}>
-          <Text style={styles.button}>Choose A coffee</Text>
-        </TouchableOpacity>
-      </View> */}
     </SafeAreaView>
   );
 };
@@ -179,9 +209,10 @@ const styles = StyleSheet.create({
     height: "30%", // Adjust as needed
   },
   whiteBackground: {
-    backgroundColor: "white",
+    backgroundColor: "#F9F9F9",
     flex: 1,
     padding: 20, // Adjust padding as needed
+    paddingTop: 60,
   },
   cardContainer: {
     position: "absolute",
@@ -201,6 +232,18 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 10,
   },
+  button: {
+    backgroundColor: "#C67C4E",
+    padding: 10,
+    marginHorizontal: 5,
+    borderRadius: 12,
+    margin: 15,
+  },
+  buttonText: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "#fff",
+  },
   title: {
     fontSize: 24,
     fontWeight: "bold",
@@ -216,5 +259,57 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginTop: 20,
   },
+  ratingContainer: {
+    position: "absolute",
+    top: 2,
+    left: 2,
+    flexDirection: "row",
+    alignItems: "center",
+    // backgroundColor: "rgba(255, 255, 255, 0.8)",
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 10,
+  },
+  ratingText: {
+    fontSize: 11,
+    fontWeight: "bold",
+    marginRight: 4,
+    color:"#fff"
+  },
+  starIcon: {
+    width: 20,
+    height: 15,
+    resizeMode: "contain",
+  },
+  container3: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
+    padding: 10,
+    paddingBottom:30
+  },
+  card: {
+    width: "45%",
+    marginBottom: 20,
+    // borderWidth: 1,
+    backgroundColor: "#fff",
+    borderRadius: 13,
+    // padding: 10,
+    // alignItems: "center",
+  },
+  image: {
+    width: "100%",
+    height: 130,
+    borderRadius: 5,
+    marginBottom: 10,
+  },
+  name: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 5,
+  },
+  price: {
+    fontSize: 16,
+    color: "green",
+  },
 });
-
